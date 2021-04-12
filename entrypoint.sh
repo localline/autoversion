@@ -10,6 +10,8 @@ pwd
 ls -al
 echo "Action Args Passed"
 sh -c "echo $*"
+echo "TAGS"
+git tag
 # Autoversion
 echo "Checking Autoversion"
 PREVIOUS_VERSION=$(autoversion version previous .)
