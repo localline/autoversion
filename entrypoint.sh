@@ -13,3 +13,5 @@ PREVIOUS_VERSION=$(autoversion version previous .)
 NEXT_VERSION=$(autoversion version next .)
 echo "Previous Version: $PREVIOUS_VERSION"
 echo "Next Version: $NEXT_VERSION"
+echo "::set-output name=previous_version::$PREVIOUS_VERSION"
+echo "::set-output name=next_version::$NEXT_VERSION"
