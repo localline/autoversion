@@ -5,6 +5,9 @@ export PATH
 # Check out the environment variables (for debugging)
 echo "Environment Variables"
 printenv
+echo "Path"
+pwd
+ls -al
 echo "Action Args Passed"
 sh -c "echo $*"
 # Autoversion
