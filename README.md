@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Required if using v2 so all tags are included.
       - name: Autoversion
         id: autoversion
         uses: localline/autoversion@master
@@ -45,7 +45,7 @@ jobs:
         if: steps.autoversion.outputs.previous_version != steps.autoversion.outputs.next_version
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.autoversion.outputs.next_version }}
           release_name: Release ${{ steps.autoversion.outputs.next_version }}
