@@ -1,0 +1,22 @@
+# action.yml
+name: "Conventional Commits Autoversion"
+author: "Local Line"
+description: "Utility to obtain the new semantic version of a git repository based on Conventional Commits"
+inputs:
+  path:
+    description: "The path to the git repository"
+    required: true
+    default: "."
+outputs:
+  previous_version:
+    description: "The last semver tag in the git history"
+  next_version:
+    description: "The next semver based on the last tag in the git history, and the conventional commits in between."
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.path }}
+branding:
+  icon: "flag"
+  color: "green"
