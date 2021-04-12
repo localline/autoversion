@@ -23,7 +23,7 @@ docker run -it autoversion
 
 ## Use as a Github Action
 
-```
+```yml
 name: Autoversion Action
 on: [push]
 
@@ -32,12 +32,14 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to use autoversion
     steps:
-    - uses: actions/checkout@master
-    - name: Autoversion
-      id: autoversion
-      uses: localline/autoversion@master
-      env:
-        GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
-      with:
-        path: "/path/to/repo/"
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 10 # required to see old tags
+      - name: Autoversion
+        id: autoversion
+        uses: localline/autoversion@master
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+        with:
+          path: "/path/to/repo/"
 ```
