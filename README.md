@@ -17,11 +17,11 @@ docker build -t autoversion .
 docker run -it autoversion
 ```
 
-## Using the CLI
+### Using the CLI
 
 `autoversion --help`
 
-## Use as a Github Action
+### Use as a Github Action
 
 ```yml
 name: Autoversion Action
@@ -30,16 +30,26 @@ on: [push]
 jobs:
   autoversion-job:
     runs-on: ubuntu-latest
-    name: A job to use autoversion
+    name: Release
     steps:
       - uses: actions/checkout@master
         with:
-          fetch-depth: 10 # required to see old tags
+          fetch-depth: 0
       - name: Autoversion
         id: autoversion
         uses: localline/autoversion@master
-        env:
-          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
         with:
-          path: "/path/to/repo/"
+          path: "."
+      - name: Create Release
+        id: create_release
+        if: steps.autoversion.outputs.previous_version != steps.autoversion.outputs.next_version
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ steps.autoversion.outputs.next_version }}
+          release_name: Release ${{ steps.autoversion.outputs.next_version }}
+          body: New Release Test
+          draft: false
+          prerelease: false
 ```
